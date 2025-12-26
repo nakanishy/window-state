@@ -255,11 +255,6 @@ impl<R: Runtime> WindowExt for Window<R> {
             c.insert(label.into(), metadata);
         }
 
-        if flags.contains(StateFlags::VISIBLE) {
-            self.show()?;
-            self.set_focus()?;
-        }
-
         Ok(())
     }
 }
