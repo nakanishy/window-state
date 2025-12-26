@@ -176,8 +176,6 @@ impl<R: Runtime> WindowExt for Window<R> {
         let cache = self.state::<WindowStateCache>();
         let mut c = cache.0.lock().unwrap();
 
-        let mut should_show = true;
-
         if let Some(state) = c
             .get(label)
             .filter(|state| state != &&WindowState::default())
@@ -223,8 +221,6 @@ impl<R: Runtime> WindowExt for Window<R> {
             if flags.contains(StateFlags::FULLSCREEN) {
                 self.set_fullscreen(state.fullscreen)?;
             }
-
-            should_show = state.visible;
         } else {
             let mut metadata = WindowState::default();
 
@@ -259,7 +255,7 @@ impl<R: Runtime> WindowExt for Window<R> {
             c.insert(label.into(), metadata);
         }
 
-        if flags.contains(StateFlags::VISIBLE) && should_show {
+        if flags.contains(StateFlags::VISIBLE) {
             self.show()?;
             self.set_focus()?;
         }
